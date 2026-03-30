@@ -1,3 +1,4 @@
+import status from "http-status";
 import { catchAsync } from "../../shared/catchAsync";
 import { sendResponse } from "../../shared/sendResponce";
 import { AuthService } from "./auth.service";
@@ -7,7 +8,7 @@ const registerPatient = catchAsync(async (req, res) => {
   const result = await AuthService.regesterPatient(payload);
 
   sendResponse(res, {
-    httpStatusCode: 201,
+    httpStatusCode: status.CREATED,
     success: true,
     message: "Patient registered successfully",
     data: result,
@@ -19,7 +20,7 @@ const loginUser = catchAsync(async (req, res) => {
   const result = await AuthService.loginUser(payload);
 
   sendResponse(res, {
-    httpStatusCode: 200,
+    httpStatusCode: status.OK,
     success: true,
     message: "User logged in successfully",
     data: result,
