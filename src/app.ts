@@ -4,6 +4,7 @@ import { prisma } from "./app/lib/prisma";
 import { IndexRouter } from "./app/routes";
 import { globalErrorHandler } from "./app/middleware/globalErrorHandeler";
 import { notFound } from "./app/middleware/notFound";
+import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
@@ -12,12 +13,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cookieParser())
 
 app.use("/api/v1", IndexRouter);
 
 // Basic route
 app.get("/", async (req: Request, res: Response) => {
-  const speciality = await prisma.speciality.create({
+  const speciality = await prisma.specialty.create({
     data: {
       title: "Cardiology",
     },
