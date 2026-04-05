@@ -28,33 +28,40 @@ const getDoctorById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const deleteDoctorById = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  await DoctorService.deleteDoctorById(id as string);
+const updateDoctor = catchAsync(
+    async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const payload = req.body;
 
-  sendResponse(res, {
-    httpStatusCode: status.OK,
-    success: true,
-    message: "Doctor deleted successfully",
-  });
-});
+        const updatedDoctor = await DoctorService.updateDoctor(id as string, payload);
 
-const updateDoctorById = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const data = req.body;
-  const result = await DoctorService.updateDoctorById(id as string, data);
+        sendResponse(res, {
+            httpStatusCode: status.OK,
+            success: true,
+            message: "Doctor updated successfully",
+            data: updatedDoctor,
+        })
+    }
+)
 
-  sendResponse(res, {
-    httpStatusCode: status.OK,
-    success: true,
-    message: "Doctor updated successfully",
-    data: result,
-  });
-});
+const deleteDoctor = catchAsync(
+    async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+        const result = await DoctorService.deleteDoctor(id as string);
+
+        sendResponse(res, {
+            httpStatusCode: status.OK,
+            success: true,
+            message: "Doctor deleted successfully",
+            data: result,
+        })
+    }
+)
 
 export const DoctorController = {
   getAllDoctors,
   getDoctorById,
-  deleteDoctorById,
-  updateDoctorById,
+  updateDoctor,
+  deleteDoctor
 };
