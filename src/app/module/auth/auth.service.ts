@@ -181,8 +181,8 @@ const getNewToken = async (refreshToken: string, sessionToken: string) => {
     throw new AppError(status.UNAUTHORIZED, "Invalid refresh token");
   }
 
-  const data = verifiedRefreshToken.data as JwtPayload;
-
+  const data = verifiedRefreshToken as JwtPayload;
+  
   const newAccessToken = tokenUtils.getAccessToken({
     userId: data.userId,
     role: data.role,
@@ -225,5 +225,5 @@ export const AuthService = {
   regesterPatient,
   loginUser,
   getMe,
-  getNewToken
+  getNewToken,
 };
