@@ -4,13 +4,13 @@ import { validateRequest } from "../../middleware/validateRequest";
 import { SpecialtyValidation } from "./specialty.validation";
 import { checkAuth } from "../../middleware/checkAuth";
 import { Role } from "../../../generated/prisma/enums";
+import { multerUpload } from "../../../config/multer.config";
 
 const router = Router();
 
-router.post("/",specialityController.createSpeciality);
 router.post('/', 
     // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
-    // multerUpload.single("file"), 
+    multerUpload.single("file"), 
     validateRequest(SpecialtyValidation.createSpecialtyZodSchema),
     specialityController.createSpeciality);
 router.get("/",specialityController.getAllSpecialities);

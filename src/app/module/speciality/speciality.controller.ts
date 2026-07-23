@@ -5,16 +5,23 @@ import { sendResponse } from "../../shared/sendResponce";
 import { SpecialityService } from "./speciality.service";
 import status from "http-status";
 
-const createSpeciality = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body;
-  const result = await SpecialityService.createSpeciality(payload);
-  sendResponse(res, {
-    httpStatusCode: status.CREATED,
-    success: true,
-    message: "Speciality created successfully",
-    data: result,
-  });
-});
+const createSpeciality = catchAsync(
+    async (req: Request, res: Response) => {
+        console.log(req.body);
+        console.log(req.file);
+        const payload = {
+            ...req.body,
+            icon : req.file?.path
+        };
+        const result = await SpecialityService.createSpeciality(payload);
+        sendResponse(res, {
+            httpStatusCode: 201,
+            success: true,
+            message: 'Specialty created successfully',
+            data: result
+        });
+    }
+)
 
 const getAllSpecialities = catchAsync(async (req: Request, res: Response) => {
   const result = await SpecialityService.getAllSpecialities();
